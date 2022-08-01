@@ -1,6 +1,7 @@
 package com.spring.lofilive.controller;
 
 import com.spring.lofilive.document.LofiDocument;
+import com.spring.lofilive.enums.VideoStatus;
 import com.spring.lofilive.service.LofiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*")
@@ -25,8 +25,9 @@ public class LofiController {
 
     @GetMapping("/lofilives")
     public ResponseEntity<Page<LofiDocument>> getAllLofi(
-            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
-        Page<LofiDocument> lofiPage = lofiService.findAll(pageable);
+            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
+            @RequestParam(required = false) String flag){
+        Page<LofiDocument> lofiPage = lofiService.findAll(pageable, flag);
         if(lofiPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }else {
