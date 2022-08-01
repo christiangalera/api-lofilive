@@ -3,6 +3,8 @@ package com.spring.lofilive.service;
 import com.spring.lofilive.document.LofiDocument;
 import com.spring.lofilive.repository.LofiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +16,8 @@ public class LofiService {
     @Autowired
     LofiRepository lofiRepository;
 
-    public List<LofiDocument> findAll() {
-        return lofiRepository.findAll();
+    public Page<LofiDocument> findAll(Pageable pageable) {
+        return lofiRepository.findAll(pageable);
     }
 
     public Optional<LofiDocument> findById(String id){
